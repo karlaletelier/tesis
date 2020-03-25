@@ -1,0 +1,33 @@
+library(readr)
+dummy <- read_delim("dummy.csv", ";", escape_double = FALSE, 
+                    trim_ws = TRUE)
+View(dummy)
+
+RRSS<-data.frame(dummy)
+
+#ESTADISTICA DESCRIPTIVA#
+summary(RRSS)
+
+cor(RRSS)
+
+modelo_multiple <- lm(formula = frecuencia ~ ., data = RRSS)
+
+summary(modelo_multiple)
+
+plot(modelo_multiple)
+
+#Normalizacion de datos
+
+normalizacion <- scale(RRSS)
+
+#PRINCIPAL COMPONENT #
+
+PC1 <- prcomp(normalizacion)
+summary(PC1)
+desv_estandar <- PC1[[1]]
+desv_estandar <- desv_estandar^2
+
+plot(PC1)
+install.packages("factoextra")
+library(factoextra)
+fviz_eig(PC1)
